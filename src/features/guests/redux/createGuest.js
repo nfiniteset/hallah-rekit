@@ -14,7 +14,10 @@ export function reducer(state, action) {
     case GUESTS_CREATE_GUEST:
       return {
         ...state,
-        guests: state.guests.concat(state.transientGuest),
+        guests: state.guests.concat({
+          ...action.guest,
+          dietaryRestrictions: []
+        }),
         transientGuest: {
           name: ''
         }

@@ -24,7 +24,7 @@ export class NewGuestForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.props.onSubmit();
+    this.props.onSubmit(this.props.transientGuest);
   }
 
   render() {
