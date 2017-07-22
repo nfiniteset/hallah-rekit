@@ -19,6 +19,7 @@ const getConfig = require('../webpack-config');
 const ArgumentParser = require('argparse').ArgumentParser;
 const graphqlHTTP = require('express-graphql');
 const schema = require('../graph/schema');
+const root = require('../graph/models').root;
 
 const parser = new ArgumentParser({
   addHelp: true,
@@ -182,8 +183,6 @@ function buildDevDll() {
 }
 
 function startGraphQLServer() {
-  const root = { hello: () => 'Hello world!', foo: () => 'bar' };
-
   const app = express();
   app.use('/graphql', graphqlHTTP({
     schema,
@@ -195,7 +194,7 @@ function startGraphQLServer() {
 
 if (!args.mode || args.mode === 'build') startBuildServer();
 if (!args.mode || args.mode === 'dev') {
-  console.log('we are running th edev server')
+  console.log('we are running th edev server');
   startGraphQLServer();
   buildDevDll().then(startDevClientServer);
 }

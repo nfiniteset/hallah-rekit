@@ -1,4 +1,13 @@
 type Query {
   hello: String
-  foo: String
+  guests: [Guest]
+}
+
+type Guest {
+  name: String!,
+  dietaryRestrictions: [DietaryRestriction]
+}
+
+type DietaryRestriction {
+  label: String!
 }
