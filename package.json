@@ -68,6 +68,7 @@
     "test": "node ./tools/run_test.js"
   },
   "devDependencies": {
+    "@playlyfe/gql": "^2.3.1",
     "argparse": "^1.0.7",
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
@@ -130,6 +131,9 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "concurrently": "^3.5.0",
+    "express-graphql": "^0.6.6",
+    "graphql": "^0.10.5",
     "moment": "^2.18.1"
   }
 }

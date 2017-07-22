@@ -17,6 +17,8 @@ const rekitPortalMiddleWare = require('rekit-portal/middleware');
 const pkgJson = require('../package.json');
 const getConfig = require('../webpack-config');
 const ArgumentParser = require('argparse').ArgumentParser;
+const graphqlHTTP = require('express-graphql');
+const schema = require('../graph/schema');
 
 const parser = new ArgumentParser({
   addHelp: true,
@@ -41,7 +43,7 @@ const manifestPath = path.join(__dirname, '../.tmp/dev-vendors-manifest.json');
 
 
 // Start an express server for development using webpack dev-middleware and hot-middleware
-function startDevServer() {
+function startDevClientServer() {
   const app = express();
   const devConfig = getConfig('dev');
 
@@ -179,6 +181,22 @@ function buildDevDll() {
   return Promise.resolve();
 }
 
+function startGraphQLServer() {
+  const root = { hello: () => 'Hello world!', foo: () => 'bar' };
+
+  const app = express();
+  app.use('/graphql', graphqlHTTP({
+    schema,
+    rootValue: root,
+    graphiql: true,
+  }));
+  app.listen(4000, () => console.log('GraphQL server is listening at localhost:4000/graphql'));
+}
+
 if (!args.mode || args.mode === 'build') startBuildServer();
-if (!args.mode || args.mode === 'dev') buildDevDll().then(startDevServer);
+if (!args.mode || args.mode === 'dev') {
+  console.log('we are running th edev server')
+  startGraphQLServer();
+  buildDevDll().then(startDevClientServer);
+}
 if (!args.mode || args.mode === 'portal') startPortalServer();

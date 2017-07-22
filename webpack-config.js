@@ -1,4 +1,5 @@
 'use strict';
+
 //  Summary:
 //    Get webpack config for different targets
 
@@ -23,6 +24,9 @@ module.exports = (type) => { // eslint-disable-line
       test: false,
       dist: false,
     }[type],
+    node: {
+      fs: 'empty'
+    },
     cache: true,
     context: path.join(__dirname, 'src'),
     entry: {
@@ -31,7 +35,7 @@ module.exports = (type) => { // eslint-disable-line
           'react-hot-loader/patch',
           `webpack-hot-middleware/client?http://0.0.0.0:${pkgJson.rekit.devPort}`,
           './styles/index.scss',
-          './index',
+          './index'
         ],
       },
       dll: {
