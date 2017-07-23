@@ -70,6 +70,13 @@ function startDevClientServer() {
   // History api fallback
   app.use(fallback('index.html', { root: path.join(__dirname, '../src') }));
 
+  // GraphQL server
+  app.use('/graphql', graphqlHTTP({
+    schema,
+    rootValue: root,
+    graphiql: true,
+  }));
+
   // Other files should not happen, respond 404
   app.get('*', (req, res) => {
     console.log('Warning: unknown req: ', req.path);
@@ -182,20 +189,8 @@ function buildDevDll() {
   return Promise.resolve();
 }
 
-function startGraphQLServer() {
-  const app = express();
-  app.use('/graphql', graphqlHTTP({
-    schema,
-    rootValue: root,
-    graphiql: true,
-  }));
-  app.listen(4000, () => console.log('GraphQL server is listening at localhost:4000/graphql'));
-}
-
 if (!args.mode || args.mode === 'build') startBuildServer();
 if (!args.mode || args.mode === 'dev') {
-  console.log('we are running th edev server');
-  startGraphQLServer();
   buildDevDll().then(startDevClientServer);
 }
 if (!args.mode || args.mode === 'portal') startPortalServer();

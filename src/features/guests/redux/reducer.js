@@ -1,9 +1,11 @@
 import initialState from './initialState';
 import { reducer as createGuestReducer } from './createGuest';
+import { reducer as fetchGuestsReducer } from './fetchGuests';
 import { reducer as setTransientGuestNameReducer } from './setTransientGuestName';
 
 const reducers = [
   createGuestReducer,
+  fetchGuestsReducer,
   setTransientGuestNameReducer,
 ];
 

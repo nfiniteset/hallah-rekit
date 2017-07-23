@@ -14,6 +14,10 @@ export class DefaultPage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    this.props.actions.fetchGuests();
+  }
+
   render() {
     return (
       <div className="guests-default-page">
