@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import request from '../../../common/request';
 
 import {
   GUESTS_FETCH_GUESTS_REQUEST,
@@ -16,6 +16,13 @@ export function fetchGuestsSuccess(res) {
   return {
     type: GUESTS_FETCH_GUESTS_SUCCESS,
     guests: res.data.guests
+  };
+}
+
+export function fetchGuestsFailure(error) {
+  return {
+    type: GUESTS_FETCH_GUESTS_FAILURE,
+    error
   };
 }
 
@@ -39,6 +46,7 @@ export function reducer(state, action) {
 const fetchGuestsQuery = `
 {
   guests {
+    id
     name
     dietaryRestrictions {
       label
@@ -50,17 +58,8 @@ const fetchGuestsQuery = `
 export function fetchGuests() {
   return (dispatch) => {
     dispatch(fetchGuestsRequest());
-    return fetch('/graphql', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        query: fetchGuestsQuery
-      }),
-    })
-      .then(response => response.json(), err => console.log('An error occured.', err))
-      .then(json => dispatch(fetchGuestsSuccess(json)));
+    return request(fetchGuestsQuery)
+      .then(json => dispatch(fetchGuestsSuccess(json)))
+      .catch(error => dispatch(fetchGuestsFailure(error)));
   };
 }

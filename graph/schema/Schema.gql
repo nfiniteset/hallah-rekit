@@ -1,13 +1,21 @@
-type Query {
-  hello: String
-  guests: [Guest]
+input GuestInput {
+  name: String!
 }
 
 type Guest {
+  id: ID!,
   name: String!,
-  dietaryRestrictions: [DietaryRestriction]
+  dietaryRestrictions: [DietaryRestriction]!
 }
 
 type DietaryRestriction {
   label: String!
+}
+
+type Query {
+  guests: [Guest]
+}
+
+type Mutation {
+  createGuest(input: GuestInput): Guest
 }
