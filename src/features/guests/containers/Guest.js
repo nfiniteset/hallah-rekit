@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import * as actions from '../redux/actions';
 
 export class Guest extends Component {
   static propTypes = {
@@ -24,7 +24,7 @@ export class Guest extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    guests: state.guests,
+    guest: state.guest.selectedGuest,
   };
 }
 

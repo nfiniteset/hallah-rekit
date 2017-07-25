@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/guests/DefaultPage';
+import { Guests } from 'src/features/guests/Guests';
 
-describe('guests/DefaultPage', () => {
+describe('guests/Guests', () => {
   it('renders node with correct class name', () => {
     const props = {
       guests: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...props} />
+      <Guests {...props} />
     );
 
     expect(

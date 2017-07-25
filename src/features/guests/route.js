@@ -1,5 +1,5 @@
 import {
-  DefaultPage,
+  Guests,
   Guest,
 } from './';
 
@@ -7,7 +7,7 @@ export default {
   path: 'guests',
   name: 'Guests',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
-    { path: 'guests', name: 'Guest', component: Guest },
+    { path: '', name: 'Guest', component: Guests, isIndex: true },
+    { path: ':id', name: 'Guest', component: Guest },
   ],
 };

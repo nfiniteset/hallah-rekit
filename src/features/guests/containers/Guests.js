@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
-import NewGuestForm from './NewGuestForm';
+import * as actions from '../redux/actions';
+import NewGuestForm from '../presenters/NewGuestForm';
+import GuestListItem from '../presenters/GuestListItem';
 
-export class DefaultPage extends Component {
+export class Guests extends Component {
   static propTypes = {
     guests: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired
@@ -27,7 +28,7 @@ export class DefaultPage extends Component {
           onInput={this.props.actions.setTransientGuestName}
         />
         {this.props.guests.map(guest => (
-          <p key={guest.name}>{guest.name}</p>
+          <GuestListItem {...guest} key={guest.name} />
         )).reverse()}
       </div>
     );
@@ -52,4 +53,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(Guests);
