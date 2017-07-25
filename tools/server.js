@@ -19,7 +19,7 @@ const getConfig = require('../webpack-config');
 const ArgumentParser = require('argparse').ArgumentParser;
 const graphqlHTTP = require('express-graphql');
 const schema = require('../graph/schema');
-const root = require('../graph/models').root;
+const resolvers = require('../graph/resolvers');
 
 const parser = new ArgumentParser({
   addHelp: true,
@@ -73,7 +73,7 @@ function startDevClientServer() {
   // GraphQL server
   app.use('/graphql', graphqlHTTP({
     schema,
-    rootValue: root,
+    rootValue: resolvers,
     graphiql: true,
   }));
 

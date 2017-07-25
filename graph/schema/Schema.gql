@@ -13,7 +13,7 @@ type DietaryRestriction {
 }
 
 type Query {
-  guests: [Guest]
+  guests: [Guest]!
 }
 
 type Mutation {
