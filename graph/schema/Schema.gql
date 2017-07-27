@@ -14,8 +14,9 @@ type DietaryRestriction {
 
 type Query {
   guests: [Guest]!
+  guest(id: ID!): Guest!
 }
 
 type Mutation {
-  createGuest(input: GuestInput): Guest
+  createGuest(input: GuestInput!): Guest
 }

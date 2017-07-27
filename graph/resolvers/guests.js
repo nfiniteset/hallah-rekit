@@ -7,15 +7,22 @@ function listGuests() {
   });
 }
 
-function createGuest(vars) {
-  return new Guest(vars.input)
+function createGuest({ input }) {
+  return new Guest(input)
     .save()
     .then(guest => Object.assign(guest.attributes, {
       dietaryRestrictions: []
     }));
 }
 
+function fetchGuest(vars) {
+  return new Guest(vars).fetch().then((guest) => {
+    return guest.serialize();
+  });
+}
+
 module.exports = root => Object.assign(root, {
   guests: listGuests,
+  guest: fetchGuest,
   createGuest
 });

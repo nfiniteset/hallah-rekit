@@ -6,25 +6,35 @@ import * as actions from '../redux/actions';
 
 export class Guest extends Component {
   static propTypes = {
-    guests: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-    })).isRequired,
+    guest: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }),
+    guestId: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired,
   };
+
+  static defaultProps = {
+    guest: null
+  }
+
+  componentDidMount() {
+    this.props.actions.fetchGuest(this.props.guestId);
+  }
 
   render() {
     return (
       <div className="guests-guest">
-        Page Content: guests/Guest
+        <p>{this.props.guest ? this.props.guest.name : ''}</p>
       </div>
     );
   }
 }
 
 /* istanbul ignore next */
-function mapStateToProps(state) {
+function mapStateToProps(state, otherProps) {
   return {
-    guest: state.guest.selectedGuest,
+    guestId: otherProps.match.params.id,
+    guest: state.guests.selectedGuest
   };
 }
 
