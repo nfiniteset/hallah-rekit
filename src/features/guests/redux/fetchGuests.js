@@ -49,6 +49,7 @@ const fetchGuestsQuery = `
     id
     name
     dietaryRestrictions {
+      id
       label
     }
   }

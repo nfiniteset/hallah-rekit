@@ -3,30 +3,41 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
+import AddDietaryRestrictionForm from '../presenters/AddDietaryRestrictionForm';
 
 export class Guest extends Component {
-  static propTypes = {
-    guest: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }),
+  static propTypes = { actions: PropTypes.object.isRequired,
+    guest: PropTypes.shape(
+      {
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired
+      }
+    ),
     guestId: PropTypes.string.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
+    transientDietaryRestriction: PropTypes.string.isRequired };
 
-  static defaultProps = {
-    guest: null
-  }
+  static defaultProps = { guest: null };
 
   componentDidMount() {
     this.props.actions.fetchGuest(this.props.guestId);
   }
 
   render() {
-    return (
-      <div className="guests-guest">
-        <p>{this.props.guest ? this.props.guest.name : ''}</p>
-      </div>
-    );
+    if (!this.props.guest) {
+      return null;
+    }
+
+    return (<div className="guests-guest">
+      <p>
+        {this.props.guest.name}
+      </p>
+      <AddDietaryRestrictionForm
+        onInput={this.props.actions.setTransientDietaryRestriction}
+        onSubmit={this.props.actions.addDietaryRestriction}
+        guestId={this.props.guest.id}
+        transientDietaryRestriction={this.props.transientDietaryRestriction}
+      />
+    </div>);
   }
 }
 
@@ -34,7 +45,8 @@ export class Guest extends Component {
 function mapStateToProps(state, otherProps) {
   return {
     guestId: otherProps.match.params.id,
-    guest: state.guests.selectedGuest
+    guest: state.guests.selectedGuest,
+    transientDietaryRestriction: state.guests.transientDietaryRestriction
   };
 }
 

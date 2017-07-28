@@ -9,7 +9,8 @@ const initialState = {
   guests: [],
   transientGuest: {
     name: ''
-  }
+  },
+  transientDietaryRestriction: ''
 };
 
 export default initialState;

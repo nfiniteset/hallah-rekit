@@ -13,7 +13,7 @@
   'rules': {
     'strict': 0,
     'guard-for-in': 0,
-    'max-len': 0,
+    'max-len': [2, { code: 100 }],
     'no-nested-ternary': 0,
     'no_underscore_dangle': 0,
     'no-console': 0,
