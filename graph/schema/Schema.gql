@@ -5,11 +5,7 @@ input GuestInput {
 type Guest {
   id: ID!,
   name: String!,
-  dietaryRestrictions: [DietaryRestriction]!
-}
-
-type DietaryRestriction {
-  label: String!
+  dietaryRestrictions: [String]!
 }
 
 type Query {
@@ -19,4 +15,5 @@ type Query {
 
 type Mutation {
   createGuest(input: GuestInput!): Guest
+  addDietaryRestriction(guestId: ID!, dietaryRestriction: String!): Guest!
 }

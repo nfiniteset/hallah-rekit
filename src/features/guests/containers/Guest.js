@@ -22,6 +22,11 @@ export class Guest extends Component {
     this.props.actions.fetchGuest(this.props.guestId);
   }
 
+  handleAddDietaryRestrictionSubmit = () => {
+    this.props.actions.addDietaryRestriction(
+      this.props.guest.id, this.props.transientDietaryRestriction);
+  }
+
   render() {
     if (!this.props.guest) {
       return null;
@@ -33,19 +38,22 @@ export class Guest extends Component {
       </p>
       <AddDietaryRestrictionForm
         onInput={this.props.actions.setTransientDietaryRestriction}
-        onSubmit={this.props.actions.addDietaryRestriction}
+        onSubmit={this.handleAddDietaryRestrictionSubmit}
         guestId={this.props.guest.id}
         transientDietaryRestriction={this.props.transientDietaryRestriction}
       />
+      {this.props.guest.dietaryRestrictions.map(d => <p key={d}>{d}</p>)}
     </div>);
   }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state, otherProps) {
+  const guestId = otherProps.match.params.id;
+  const guest = state.guests.guests.find(g => g.id === guestId);
   return {
-    guestId: otherProps.match.params.id,
-    guest: state.guests.selectedGuest,
+    guestId,
+    guest,
     transientDietaryRestriction: state.guests.transientDietaryRestriction
   };
 }

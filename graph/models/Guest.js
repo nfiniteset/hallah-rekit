@@ -1,20 +1,15 @@
-const db = require('../db');
-const bookshelf = require('bookshelf')(db);
-const DietaryRestrictions = require('./DietaryRestrictions');
-const GuestsDietaryRestrictions = require('./GuestsDietaryRestrictions');
+const ModelBase = require('./ModelBase');
+const DietaryRestriction = require('./DietaryRestriction');
+const GuestDietaryRestriction = require('./GuestDietaryRestriction');
 
-const Guest = bookshelf.Model.extend({
+const Guest = ModelBase.extend({
   idAttribute: 'id',
 
   tableName: 'guests',
 
   dietaryRestrictions() {
-    this.belongsToMany(DietaryRestrictions).through(GuestsDietaryRestrictions);
+    return this.belongsToMany(DietaryRestriction).through(GuestDietaryRestriction);
   },
-
-  serialize() {
-    return Object.assign({}, this.attributes, { dietaryRestrictions: [] });
-  }
 
 });
 

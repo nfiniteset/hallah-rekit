@@ -48,10 +48,7 @@ const fetchGuestsQuery = `
   guests {
     id
     name
-    dietaryRestrictions {
-      id
-      label
-    }
+    dietaryRestrictions
   }
 }
 `;

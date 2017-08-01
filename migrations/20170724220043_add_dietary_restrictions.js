@@ -5,13 +5,15 @@ exports.up = async (knex) => {
     table.timestamps();
   });
 
-  await knex.schema.createTable('guests_dietary_restrictions', (table) => {
-    table.integer('guests_id').references('guests.id');
+  await knex.schema.createTable('guest_dietary_restrictions', (table) => {
+    table.increments('id').primary();
+    table.integer('guest_id').references('guests.id');
     table.integer('dietary_restriction_id').references('dietary_restrictions.id');
+    table.timestamps();
   });
 };
 
 exports.down = async (knex) => {
-  await knex.schema.dropTable('guests_dietary_restrictions');
+  await knex.schema.dropTable('guest_dietary_restrictions');
   await knex.schema.dropTable('dietary_restrictions');
 };

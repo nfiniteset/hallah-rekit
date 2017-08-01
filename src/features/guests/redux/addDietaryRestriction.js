@@ -1,3 +1,4 @@
+import upsertById from '../../../common/upsertById';
 import request from '../../../common/request';
 import {
   GUESTS_ADD_DIETARY_RESTRICTION_REQUEST,
@@ -11,10 +12,10 @@ function addDietaryRestrictionRequest() {
   };
 }
 
-function addDietaryRestrictionSuccess(res) {
+function addDietaryRestrictionSuccess(guestId, res) {
   return {
     type: GUESTS_ADD_DIETARY_RESTRICTION_SUCCESS,
-    guest: res.data.dietaryRestriction
+    guest: res.data.addDietaryRestriction
   };
 }
 
@@ -28,7 +29,9 @@ function addDietaryRestrictionFailure(error) {
 const addDietaryRestrictionQuery = `
 mutation AddDietaryRestriction($guestId: ID!, $dietaryRestriction: String!) {
   addDietaryRestriction(guestId: $guestId, dietaryRestriction: $dietaryRestriction) {
-    dietaryRestriction
+    id
+    name
+    dietaryRestrictions
   }
 }
 `;
@@ -37,9 +40,10 @@ export function addDietaryRestriction(guestId, dietaryRestriction) {
   return (dispatch) => {
     dispatch(addDietaryRestrictionRequest());
     return request(addDietaryRestrictionQuery, {
-      input: { guestId, dietaryRestriction }
+      guestId,
+      dietaryRestriction
     })
-      .then(json => dispatch(addDietaryRestrictionSuccess(json)))
+      .then(res => dispatch(addDietaryRestrictionSuccess(guestId, res)))
       .catch(error => dispatch(addDietaryRestrictionFailure(error)));
   };
 }
@@ -52,10 +56,8 @@ export function reducer(state, action) {
     case GUESTS_ADD_DIETARY_RESTRICTION_SUCCESS:
       return {
         ...state,
-        guests: state.guests.concat(action.guest),
-        selectedGuest: Object.assign(state.selectedGuest, {
-          dietaryRestrictions: state.selectedGuest.dietaryRestrictions.concat(action.dietaryRestriction)
-        })
+        guests: upsertById(state.guests, action.guest),
+        transientDietaryRestriction: ''
       };
     case GUESTS_ADD_DIETARY_RESTRICTION_FAILURE: {
       return { ...state };

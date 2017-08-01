@@ -20,7 +20,7 @@ class AddDietaryRestrctionForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.props.onSubmit(event.target.value);
+    this.props.onSubmit();
   };
 
   render() {

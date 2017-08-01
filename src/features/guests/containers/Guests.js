@@ -28,7 +28,7 @@ export class Guests extends Component {
           onInput={this.props.actions.setTransientGuestName}
         />
         {this.props.guests.map(guest => (
-          <GuestListItem {...guest} key={guest.name} />
+          <GuestListItem {...guest} key={guest.id + guest.name} />
         )).reverse()}
       </div>
     );

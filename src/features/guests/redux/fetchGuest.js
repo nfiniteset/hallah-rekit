@@ -1,3 +1,4 @@
+import upsertById from '../../../common/upsertById';
 import request from '../../../common/request';
 
 import {
@@ -35,7 +36,9 @@ export function reducer(state, action) {
       return { ...state, isFetching: true };
     }
     case GUESTS_FETCH_GUEST_SUCCESS: {
-      return { ...state, selectedGuest: action.guest, isFetching: false };
+      return { ...state,
+        guests: upsertById(state.guests, action.guest),
+        isFetching: false };
     }
     default: {
       return state;
@@ -48,9 +51,7 @@ query FetchGuest($id: ID!) {
   guest(id: $id) {
     id
     name
-    dietaryRestrictions {
-      label
-    }
+    dietaryRestrictions
   }
 }
 `;
