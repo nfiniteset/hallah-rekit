@@ -1,11 +1,11 @@
 import {
-  DefaultPage,
+  UpcomingDinners,
 } from './';
 
 export default {
   path: 'dinners',
   name: 'Dinners',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+    { path: '', name: 'Upcoming dinners', component: UpcomingDinners, isIndex: true },
   ],
 };

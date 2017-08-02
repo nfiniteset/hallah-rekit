@@ -7,7 +7,7 @@ export default {
   path: 'guests',
   name: 'Guests',
   childRoutes: [
-    { path: '', name: 'Guest', component: Guests, isIndex: true },
+    { path: '', name: 'Guests', component: Guests, isIndex: true },
     { path: ':id', name: 'Guest', component: Guest },
   ],
 };
