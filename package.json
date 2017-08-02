@@ -65,7 +65,8 @@
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
-    "test": "node ./tools/run_test.js"
+    "test": "node ./tools/run_test.js",
+    "db:reset": "node ./tools/db_reset.js"
   },
   "devDependencies": {
     "@playlyfe/gql": "^2.3.1",
