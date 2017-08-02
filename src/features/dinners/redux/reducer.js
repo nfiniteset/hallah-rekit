@@ -1,7 +1,9 @@
 import initialState from './initialState';
 import { reducer as createNextDinnerReducer } from './createNextDinner';
+import { reducer as fetchDinnersReducer } from './fetchDinners';
 
 const reducers = [
+  fetchDinnersReducer,
   createNextDinnerReducer,
 ];
 

@@ -17,6 +17,11 @@ async function createNextDinner() {
   return nextDinner.serialize();
 }
 
+function fetchDinners() {
+  return Dinner.fetchAll().then(dinners => dinners.serialize());
+}
+
 module.exports = root => Object.assign(root, {
+  dinners: fetchDinners,
   createNextDinner
 });

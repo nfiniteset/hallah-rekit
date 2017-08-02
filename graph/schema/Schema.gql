@@ -1,4 +1,5 @@
 type Dinner {
+  id: ID!
   startsAt: String!
 }
 
@@ -15,6 +16,7 @@ type Guest {
 type Query {
   guests: [Guest]!
   guest(id: ID!): Guest!
+  dinners: [Dinner]!
 }
 
 type Mutation {

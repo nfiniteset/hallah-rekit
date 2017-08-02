@@ -3,18 +3,13 @@ const DietaryRestriction = require('../models/DietaryRestriction');
 const GuestDietaryRestriction = require('../models/GuestDietaryRestriction');
 
 function listGuests() {
-  return Guest.fetchAll({ withRelated: ['dietaryRestrictions'] }).then((guests) => {
-    console.log(guests);
-    return guests.map(guest => Object.assign({ name: 'Unknown', dietaryRestrictions: [] }, guest.attributes));
-  });
+  return Guest.fetchAll({ withRelated: ['dietaryRestrictions'] }).then(guests => guests.serialize());
 }
 
 function createGuest({ input }) {
   return new Guest(input)
     .save()
-    .then(guest => Object.assign(guest.attributes, {
-      dietaryRestrictions: []
-    }));
+    .then(guest => guest.serialize());
 }
 
 function fetchGuest(vars) {

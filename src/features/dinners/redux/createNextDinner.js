@@ -12,10 +12,10 @@ function createNextDinnerRequest() {
   };
 }
 
-function createNextDinnerSuccess(res) {
+function createNextDinnerSuccess(data) {
   return {
     type: DINNERS_CREATE_NEXT_DINNER_SUCCESS,
-    dinner: parseDinner(res.data.createNextDinner)
+    dinner: parseDinner(data.createNextDinner)
   };
 }
 
@@ -38,7 +38,7 @@ export function createNextDinner() {
   return (dispatch) => {
     dispatch(createNextDinnerRequest());
     return request(createNextDinnerQuery)
-      .then(res => dispatch(createNextDinnerSuccess(res)))
+      .then(res => dispatch(createNextDinnerSuccess(res.data)))
       .catch(error => dispatch(createNextDinnerFailure(error)));
   };
 }

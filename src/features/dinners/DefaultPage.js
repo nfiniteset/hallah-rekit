@@ -12,6 +12,10 @@ export class DefaultPage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    this.props.actions.fetchDinners();
+  }
+
   render() {
     return (
       <div className="dinners-default-page">
