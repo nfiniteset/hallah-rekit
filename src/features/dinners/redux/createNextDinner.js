@@ -1,32 +1,59 @@
-import moment from 'moment';
+import request from '../../../common/request';
+import {
+  DINNERS_CREATE_NEXT_DINNER_REQUEST,
+  DINNERS_CREATE_NEXT_DINNER_SUCCESS,
+  DINNERS_CREATE_NEXT_DINNER_FAILURE,
+} from './constants';
+import parseDinner from './parseDinner';
 
-function followingFriday(date) {
-  const momentDate = moment(date);
-  const friOrSat = [5, 6].includes(momentDate.day());
-  return momentDate.day(friOrSat ? 12 : 5);
+function createNextDinnerRequest() {
+  return {
+    type: DINNERS_CREATE_NEXT_DINNER_REQUEST
+  };
 }
 
-import {
-  DINNERS_CREATE_NEXT_DINNER,
-} from './constants';
+function createNextDinnerSuccess(res) {
+  return {
+    type: DINNERS_CREATE_NEXT_DINNER_SUCCESS,
+    dinner: parseDinner(res.data.createNextDinner)
+  };
+}
+
+function createNextDinnerFailure(error) {
+  return {
+    type: DINNERS_CREATE_NEXT_DINNER_FAILURE,
+    error
+  };
+}
+
+const createNextDinnerQuery = `
+mutation CreateNextDinner {
+  createNextDinner {
+    startsAt
+  }
+}
+`;
 
 export function createNextDinner() {
-  return {
-    type: DINNERS_CREATE_NEXT_DINNER,
-    dinner: {
-      startAt: followingFriday(moment())
-    }
+  return (dispatch) => {
+    dispatch(createNextDinnerRequest());
+    return request(createNextDinnerQuery)
+      .then(res => dispatch(createNextDinnerSuccess(res)))
+      .catch(error => dispatch(createNextDinnerFailure(error)));
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case DINNERS_CREATE_NEXT_DINNER:
+    case DINNERS_CREATE_NEXT_DINNER_REQUEST:
+      return state;
+    case DINNERS_CREATE_NEXT_DINNER_SUCCESS:
       return {
         ...state,
         dinners: state.dinners.concat(action.dinner)
       };
-
+    case DINNERS_CREATE_NEXT_DINNER_FAILURE:
+      return state;
     default:
       return state;
   }

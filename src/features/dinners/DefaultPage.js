@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -8,7 +7,7 @@ import * as actions from './redux/actions';
 export class DefaultPage extends Component {
   static propTypes = {
     dinners: PropTypes.arrayOf(PropTypes.shape({
-      startAt: momentPropTypes.momentObj
+      startsAt: PropTypes.instanceOf(Date)
     })).isRequired,
     actions: PropTypes.object.isRequired,
   };
@@ -18,7 +17,7 @@ export class DefaultPage extends Component {
       <div className="dinners-default-page">
         <button onClick={this.props.actions.createNextDinner}>Next dinner</button>
         {this.props.dinners.map(dinner => (
-          <p key={dinner.startAt}>{dinner.startAt.format()}</p>
+          <p key={dinner.startsAt}>{dinner.startsAt.toString()}</p>
         ))}
       </div>
     );

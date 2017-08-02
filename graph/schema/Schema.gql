@@ -1,3 +1,7 @@
+type Dinner {
+  startsAt: String!
+}
+
 input GuestInput {
   name: String!
 }
@@ -16,4 +20,5 @@ type Query {
 type Mutation {
   createGuest(input: GuestInput!): Guest
   addDietaryRestriction(guestId: ID!, dietaryRestriction: String!): Guest!
+  createNextDinner: Dinner!
 }
