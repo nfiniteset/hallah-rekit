@@ -10,6 +10,7 @@ exports.up = async (knex) => {
     table.increments('id').primary();
     table.integer('guest_id').references('guests.id');
     table.integer('dinner_id').references('dinners.id');
+    table.enu('state', ['INVITED', 'ACCEPTED', 'TENTATIVE', 'DECLINED', 'CONFIRMED', 'CANCELED', 'SHOWED', 'NO-SHOWED']);
     table.timestamps();
   });
 };

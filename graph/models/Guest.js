@@ -11,6 +11,12 @@ const Guest = ModelBase.extend({
     return this.belongsToMany(DietaryRestriction).through(GuestDietaryRestriction);
   },
 
+  serialize() {
+    return Object.assign(this.attributes, {
+      dietaryRestrictions: this.related('dietaryRestrictions').map(r => r.serialize())
+    });
+  }
+
 });
 
 module.exports = Guest;

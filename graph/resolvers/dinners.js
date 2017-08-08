@@ -2,6 +2,7 @@ const isFriday = require('date-fns/is_friday');
 const isSaturday = require('date-fns/is_saturday');
 const setDay = require('date-fns/set_day');
 const Dinner = require('../models/Dinner');
+const Invitation = require('../models/Invitation');
 
 function followingFriday(dateOrNull) {
   const date = dateOrNull || Date.now();
@@ -21,7 +22,22 @@ function fetchDinners() {
   return Dinner.fetchAll().then(dinners => dinners.serialize());
 }
 
+async function inviteGuest({ input }) {
+  await Invitation.create({
+    dinner_id: input.dinnerId,
+    guest_id: input.guestId,
+    state: Invitation.INVITED
+  });
+
+  const dinner = await Dinner.findById(input.dinnerId, {
+    withRelated: ['invitations']
+  });
+
+  return dinner.serialize();
+}
+
 module.exports = root => Object.assign(root, {
   dinners: fetchDinners,
-  createNextDinner
+  createNextDinner,
+  inviteGuest
 });

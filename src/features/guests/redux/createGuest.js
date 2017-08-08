@@ -30,9 +30,7 @@ mutation CreateGuest($input: GuestInput!) {
   createGuest(input: $input) {
     id
     name
-    dietaryRestrictions {
-      label
-    }
+    dietaryRestrictions
   }
 }
 `;

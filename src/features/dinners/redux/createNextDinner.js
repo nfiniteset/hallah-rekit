@@ -29,6 +29,7 @@ function createNextDinnerFailure(error) {
 const createNextDinnerQuery = `
 mutation CreateNextDinner {
   createNextDinner {
+    id
     startsAt
   }
 }

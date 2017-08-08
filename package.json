@@ -142,6 +142,7 @@
     "knex": "^0.13.0",
     "moment": "^2.18.1",
     "pg": "^7.0.2",
+    "react-select": "^1.0.0-rc.5",
     "styled-components": "^2.1.1"
   }
 }

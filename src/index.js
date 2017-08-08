@@ -5,6 +5,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
+import 'react-select/dist/react-select.css';
 import configStore from './common/configStore';
 import routeConfig from './common/routeConfig';
 import Root from './Root';

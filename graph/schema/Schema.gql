@@ -1,6 +1,18 @@
 type Dinner {
   id: ID!
   startsAt: String!
+  invitations: [Invitation]!
+}
+
+input InvitationInput {
+  dinnerId: ID!
+  guestId: ID!
+}
+
+type Invitation {
+  dinnerId: ID!
+  guestId: ID!
+  state: String!
 }
 
 input GuestInput {
@@ -23,4 +35,5 @@ type Mutation {
   createGuest(input: GuestInput!): Guest
   addDietaryRestriction(guestId: ID!, dietaryRestriction: String!): Guest!
   createNextDinner: Dinner!
+  inviteGuest(input: InvitationInput!): Dinner!
 }

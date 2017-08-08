@@ -1,7 +1,7 @@
-const camelCase = require('lodash/fp/camelCase');
-const snakeCase = require('lodash/fp/snakeCase');
+const camelizeKeys = require('../utils/camelizeKeys');
 const ModelBase = require('./ModelBase');
 const Guest = require('./Guest');
+const Invitation = require('./Invitation');
 
 const Dinner = ModelBase.extend({
   idAttribute: 'id',
@@ -9,25 +9,21 @@ const Dinner = ModelBase.extend({
   tableName: 'dinners',
 
   guests() {
-    return this.belongsToMany(Guest);
+    return this
+      .hasMany(Guest)
+      .through(Invitation);
+  },
+
+  invitations() {
+    return this.hasMany(Invitation);
   },
 
   serialize() {
-    return Object.entries(this.attributes).reduce(
-      (memo, [key, val]) => {
-        let nextVal = val;
-        switch (key) {
-          case 'starts_at': {
-            nextVal = val.toJSON();
-            break;
-          }
-          default: {
-            break;
-          }
-        }
-        return Object.assign({}, memo, { [camelCase(key)]: nextVal });
-      }, {}
-    );
+    const attrs = Object.assign(this.attributes, {
+      invitations: this.related('invitations').map(r => r.serialize())
+    });
+
+    return camelizeKeys(attrs);
   }
 
 });
