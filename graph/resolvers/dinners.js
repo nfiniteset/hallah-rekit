@@ -19,7 +19,7 @@ async function createNextDinner() {
 }
 
 function fetchDinners() {
-  return Dinner.fetchAll().then(dinners => dinners.serialize());
+  return Dinner.fetchAll({ withRelated: ['invitations'] }).then(dinners => dinners.serialize());
 }
 
 async function inviteGuest({ input }) {

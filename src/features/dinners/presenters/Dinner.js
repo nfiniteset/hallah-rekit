@@ -20,6 +20,9 @@ class Dinner extends Component {
       <Div>
         <p key={this.props.startsAt}>{this.props.startsAt.toString()}</p>
         <Select options={guestOptions} onChange={this.handleGuestSelected} />
+        {this.props.invitations.map(i => (
+          <p key={i.guestId}>{i.guestId} {i.state}</p>
+        ))}
       </Div>
     );
   }
@@ -31,7 +34,12 @@ Dinner.propTypes = {
   guests: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  invitations: PropTypes.arrayOf(PropTypes.shape({
+    guestId: PropTypes.string,
+    state: PropTypes.string
+  })).isRequired,
+  inviteGuest: PropTypes.func.isRequired
 };
 
 module.exports = Dinner;

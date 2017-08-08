@@ -7,7 +7,7 @@ import { fetchGuests } from '../../guests/redux/actions';
 
 import Dinner from '../presenters/Dinner';
 
-export class DefaultPage extends Component {
+export class UpcomingDinners extends Component {
   static propTypes = {
     dinners: PropTypes.array.isRequired,
     guests: PropTypes.array.isRequired,
@@ -54,4 +54,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(UpcomingDinners);

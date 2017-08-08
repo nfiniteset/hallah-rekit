@@ -31,6 +31,7 @@ mutation CreateNextDinner {
   createNextDinner {
     id
     startsAt
+    invitations
   }
 }
 `;

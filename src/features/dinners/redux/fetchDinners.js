@@ -11,6 +11,10 @@ query {
   dinners {
     id
     startsAt
+    invitations {
+      guestId
+      state
+    }
   }
 }
 `;
