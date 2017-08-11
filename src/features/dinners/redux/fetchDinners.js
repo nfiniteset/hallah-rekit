@@ -12,6 +12,7 @@ query {
     id
     startsAt
     invitations {
+      id
       guestId
       state
     }

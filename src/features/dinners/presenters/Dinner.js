@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 import Select from 'react-select';
@@ -14,15 +15,16 @@ class Dinner extends Component {
   }
 
   render() {
-    const guestOptions = this.props.guests.map(g => ({ value: g.id, label: g.name }));
+    const invitedGuestIds = this.props.invitations.map(i => i.guestId);
+    const guestOptions = this.props.guests
+      .filter(g => !invitedGuestIds.includes(g.id))
+      .map(g => ({ value: g.id, label: g.name }));
 
     return (
       <Div>
         <p key={this.props.startsAt}>{this.props.startsAt.toString()}</p>
         <Select options={guestOptions} onChange={this.handleGuestSelected} />
-        {this.props.invitations.map(i => (
-          <p key={i.guestId}>{i.guestId} {i.state}</p>
-        ))}
+        {this.props.children}
       </Div>
     );
   }
@@ -39,7 +41,12 @@ Dinner.propTypes = {
     guestId: PropTypes.string,
     state: PropTypes.string
   })).isRequired,
-  inviteGuest: PropTypes.func.isRequired
+  inviteGuest: PropTypes.func.isRequired,
+  children: PropTypes.node
+};
+
+Dinner.defaultProps = {
+  children: null
 };
 
 module.exports = Dinner;

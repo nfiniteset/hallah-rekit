@@ -33,6 +33,7 @@ mutation InviteGuest($input: InvitationInput!) {
     id
     startsAt
     invitations {
+      id
       state
       guestId
     }

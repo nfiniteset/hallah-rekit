@@ -6,17 +6,34 @@ import * as actions from '../redux/actions';
 import { fetchGuests } from '../../guests/redux/actions';
 
 import Dinner from '../presenters/Dinner';
+import Invitation from '../presenters/Invitation';
 
 export class UpcomingDinners extends Component {
   static propTypes = {
-    dinners: PropTypes.array.isRequired,
+    dinners: PropTypes.arrayOf(PropTypes.shape({
+      invitations: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired
+      }))
+    })),
     guests: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
+  static defaultProps = {
+    dinners: [],
+    guests: []
+  }
+
   componentDidMount() {
     this.props.actions.fetchDinners();
     this.props.actions.fetchGuests();
+  }
+
+  invitationsFor(dinner) {
+    return dinner.invitations.map(invitation => ({
+      invitation,
+      guest: this.props.guests.find(g => g.id === invitation.guestId)
+    }));
   }
 
   render() {
@@ -28,7 +45,11 @@ export class UpcomingDinners extends Component {
             guests={this.props.guests}
             inviteGuest={this.props.actions.inviteGuest}
             key={dinner.startsAt}
-          />
+          >
+            {this.invitationsFor(dinner).map(({ invitation, guest }) => (
+              <Invitation {...invitation} guest={guest} key={invitation.id} />
+            ))}
+          </Dinner>
         ))}
         <button onClick={this.props.actions.createNextDinner}>Next dinner</button>
       </div>

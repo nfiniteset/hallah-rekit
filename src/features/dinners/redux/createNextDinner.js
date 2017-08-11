@@ -31,7 +31,11 @@ mutation CreateNextDinner {
   createNextDinner {
     id
     startsAt
-    invitations
+    invitations {
+      id
+      guestId
+      state
+    }
   }
 }
 `;

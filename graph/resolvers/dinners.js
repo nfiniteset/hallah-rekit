@@ -18,15 +18,21 @@ async function createNextDinner() {
   return nextDinner.serialize();
 }
 
-function fetchDinners() {
-  return Dinner.fetchAll({ withRelated: ['invitations'] }).then(dinners => dinners.serialize());
+async function fetchDinners() {
+  const dinners = await Dinner.fetchAll({ withRelated: ['invitations'] });
+  const serializedDinners = dinners.serialize();
+  console.log(serializedDinners);
+  return serializedDinners;
 }
 
 async function inviteGuest({ input }) {
-  await Invitation.create({
+  await Invitation.findOrCreate({
     dinner_id: input.dinnerId,
-    guest_id: input.guestId,
-    state: Invitation.INVITED
+    guest_id: input.guestId
+  }, {
+    defaults: {
+      state: Invitation.INVITED
+    }
   });
 
   const dinner = await Dinner.findById(input.dinnerId, {

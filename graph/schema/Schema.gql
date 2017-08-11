@@ -1,7 +1,7 @@
 type Dinner {
   id: ID!
   startsAt: String!
-  invitations: [Invitation]!
+  invitations: [Invitation!]!
 }
 
 input InvitationInput {
@@ -10,6 +10,7 @@ input InvitationInput {
 }
 
 type Invitation {
+  id: ID!
   dinnerId: ID!
   guestId: ID!
   state: String!
