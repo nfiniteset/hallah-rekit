@@ -1,14 +1,14 @@
 const camelizeKeys = require('../utils/camelizeKeys');
 const ModelBase = require('./ModelBase');
-const Dinner = require('./Dinner');
 const Guest = require('./Guest');
+require('./Dinner');
 
 const Invitation = ModelBase.extend({
   idAttribute: 'id',
   tableName: 'invitations',
 
   dinner() {
-    return this.belongsTo(Dinner);
+    return this.belongsTo('Dinner');
   },
 
   guest() {
@@ -35,4 +35,4 @@ Invitation.states.forEach((state) => {
   Invitation[state] = state;
 });
 
-module.exports = Invitation;
+module.exports = ModelBase.bookshelf.model('Invitation', Invitation);

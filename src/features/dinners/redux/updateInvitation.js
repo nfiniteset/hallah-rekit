@@ -1,5 +1,6 @@
 import upsertById from '../../../common/upsertById';
 import request from '../../../common/request';
+import parseDinner from './parseDinner';
 
 import {
   DINNERS_UPDATE_INVITATION_REQUEST,
@@ -16,7 +17,7 @@ function updateInvitationRequest() {
 function updateInvitationSuccess(data) {
   return {
     type: DINNERS_UPDATE_INVITATION_SUCCESS,
-    dinner: data.updateInvitation.dinner
+    dinner: parseDinner(data.updateInvitation)
   };
 }
 
@@ -45,8 +46,8 @@ export function updateInvitation(attrs) {
   return (dispatch) => {
     dispatch(updateInvitationRequest());
     return request(updateInvitationQuery, { input: attrs })
-      .then(res => updateInvitationSuccess(res.data))
-      .catch(error => updateInvitationFailure(error));
+      .then(res => dispatch(updateInvitationSuccess(res.data)))
+      .catch(error => dispatch(updateInvitationFailure(error)));
   };
 }
 
@@ -61,7 +62,7 @@ export function reducer(state, action) {
     case DINNERS_UPDATE_INVITATION_SUCCESS: {
       return {
         ...state,
-        dinners: upsertById(state.dinners.dinners, action.dinner)
+        dinners: upsertById(state.dinners, action.dinner)
       };
     }
     default: {

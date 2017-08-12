@@ -28,4 +28,4 @@ const Dinner = ModelBase.extend({
 
 });
 
-module.exports = Dinner;
+module.exports = ModelBase.bookshelf.model('Dinner', Dinner);
