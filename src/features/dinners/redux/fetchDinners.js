@@ -17,6 +17,11 @@ query {
       state
     }
   }
+  guests {
+    id
+    name
+    dietaryRestrictions
+  }
 }
 `;
 
@@ -29,7 +34,8 @@ function fetchDinnersRequest() {
 function fetchDinnersSuccess(res) {
   return {
     type: DINNERS_FETCH_DINNERS_SUCCESS,
-    dinners: res.data.dinners.map(d => parseDinner(d))
+    dinners: res.data.dinners.map(d => parseDinner(d)),
+    guests: res.data.guests
   };
 }
 
@@ -57,7 +63,7 @@ export function reducer(state, action) {
     case DINNERS_FETCH_DINNERS_SUCCESS: {
       return {
         ...state,
-        dinners: action.dinners
+        dinners: action.dinners,
       };
     }
     case DINNERS_FETCH_DINNERS_FAILURE: {

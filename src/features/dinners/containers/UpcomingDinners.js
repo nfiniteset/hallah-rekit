@@ -26,7 +26,6 @@ export class UpcomingDinners extends Component {
 
   componentDidMount() {
     this.props.actions.fetchDinners();
-    this.props.actions.fetchGuests();
   }
 
   invitationsFor(dinner) {
@@ -47,7 +46,12 @@ export class UpcomingDinners extends Component {
             key={dinner.startsAt}
           >
             {this.invitationsFor(dinner).map(({ invitation, guest }) => (
-              <Invitation {...invitation} guest={guest} key={invitation.id} />
+              <Invitation
+                {...invitation}
+                guest={guest}
+                onStateChange={this.props.actions.updateInvitation}
+                key={invitation.id}
+              />
             ))}
           </Dinner>
         ))}

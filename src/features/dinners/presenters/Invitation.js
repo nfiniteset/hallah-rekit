@@ -8,16 +8,40 @@ const Div = styled.div`
   margin-bottom: 20px;
 `;
 
+const stateOptions = [
+  { label: 'Invited', value: 'INVITED' },
+  { label: 'Accepted', value: 'ACCEPTED' },
+  { label: 'Tentative', value: 'TENTATIVE' },
+  { label: 'Declined', value: 'DECLINED' },
+  { label: 'Confirmed', value: 'CONFIRMED' },
+  { label: 'Canceled', value: 'CANCELED' },
+  { label: 'Showed', value: 'SHOWED' },
+  { label: 'No-showed', value: 'NO-SHOWED' },
+];
+
 class Invitation extends Component {
   static propTypes = {
-    guest: PropTypes.object.isRequired,
-    state: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    guest: PropTypes.object,
+    state: PropTypes.string.isRequired,
+    onStateChange: PropTypes.func.isRequired
   }
+
+  static defaultProps = {
+    guest: null
+  }
+
+  handleSelection = (event) => {
+    this.props.onStateChange({ id: this.props.id, state: event.target.value });
+  }
+
   render() {
     return (
       <Div>
-        <Guest {...this.props.guest} />
-        <p>{this.props.state}</p>
+        {this.props.guest ? <Guest {...this.props.guest} /> : null}
+        <select value={this.props.state} onChange={this.handleSelection}>
+          {stateOptions.map(o => <option key={o.value} {...o} />)}
+        </select>
       </Div>
     );
   }
