@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/dinners/DefaultPage';
+import { UpcomingDinners } from 'src/features/dinners/containers/UpcomingDinners';
 
-describe('dinners/DefaultPage', () => {
+describe('dinners/UpcomingDinners', () => {
   it('renders node with correct class name', () => {
     const props = {
       dinners: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...props} />
+      <UpcomingDinners {...props} />
     );
 
     expect(
